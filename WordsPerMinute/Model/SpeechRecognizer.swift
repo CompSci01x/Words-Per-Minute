@@ -1,3 +1,10 @@
+//
+//  SpeechRecognizer.swift
+//  WordsPerMinute
+//
+//  From  Developer iOS App Dev Tutorials - "Scrumdinger"
+//
+
 import AVFoundation
 import Foundation
 import Speech

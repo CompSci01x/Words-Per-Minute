@@ -2,7 +2,7 @@
 //  ReadingView.swift
 //  WordsPerMinute
 //
-//  Created by Spruce Tree on 6/11/21.
+//  Created by CompSci01x on 6/11/21.
 //
 
 import SwiftUI
@@ -31,6 +31,8 @@ struct TimerArc: Shape {
 }
 
 struct ReadingView: View {
+    
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var timerRingColor = Color.blue
     @State private var timerRingCardColor = Color.green
@@ -91,15 +93,20 @@ struct ReadingView: View {
                         isMicrophoneAccess = true
                     } else {
                         isMicrophoneAccess = false
-                        transcript = "Speech Regonition Access Denied"
+                        transcript = """
+                                     Speech Recognition Access Denied.
+                                     
+                                     Go to Settings -> WordsPerMinute -> Speech Recognition
+                                     """
                     }
                 }
             } else {
                 isMicrophoneAccess = false
-                transcript = "Mic Access Denied"
-                // Present message to user indicating that recording
-                // can't be performed until they change their preference
-                // under Settings -> Privacy -> Microphone
+                transcript = """
+                             Mic Access Denied.
+                             
+                             Go to Settings -> WordsPerMinute -> Microphone
+                             """
             }
         }
     }
@@ -110,63 +117,63 @@ struct ReadingView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 50)
                 .fill(timerRingCardColor)
+            
             VStack{
-                
                 ZStack{
                     RoundedRectangle(cornerRadius: 50)
                         .fill(timerRingCardColor)
                     
-                VStack {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 50)
-                            .fill(timerRingCardColor)
+                    VStack {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 50)
+                                .fill(timerRingCardColor)
                         
-                        Circle()
-                            .stroke(lineWidth: 10)
-                            .fill(timerRingColor)
-                            .padding()
+                            Circle()
+                                .stroke(lineWidth: 10)
+                                .fill(timerRingColor)
+                                .padding()
 
-                        VStack {
-                            Button(action: {
-                                if !isTimerRunning && isMicrophoneAccess {
-                                    startTimer()
-                                } else if isTimerRunning && isMicrophoneAccess {
-                                    stopAndResetTimer()
-                                }
-                            }) {
-                                Image(systemName: !isTimerRunning ? "play.fill" : "pause.fill")
-                                    .font(.largeTitle)
-                                    .padding()
-                                    .foregroundColor(timerRingColor)
-                                }
-                            
-                            Text("\(String(format: "%.2f", secondsElapsed))")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .offset(x:3)
-                        }
-                        
-                        TimerArc(startAngle: Angle(degrees: 0.0),
-                                 endAngle: Angle(degrees: degreesToMove))
-                            .stroke(lineWidth: 5)
-                            .rotation(Angle(degrees: -90))
-                            .fill(Color.white)
-                        
-                            .onReceive(timer, perform: { _ in
-                                if isTimerRunning {
-                                    print("\(secondsElapsed)")
-                                    secondsElapsed += 0.00125
-                                    degreesToMove += 0.0075
-                                    
-                                    if secondsElapsed >= 60.00 {
+                            VStack {
+                                Button(action: {
+                                    if !isTimerRunning && isMicrophoneAccess {
+                                        startTimer()
+                                    } else if isTimerRunning && isMicrophoneAccess {
                                         stopAndResetTimer()
                                     }
-                                }
-                            })
+                                }) {
+                                    Image(systemName: !isTimerRunning ? "play.fill" : "pause.fill")
+                                        .font(.largeTitle)
+                                        .padding()
+                                        .foregroundColor(timerRingColor)
+                                    }
+                                
+                                Text("\(String(format: "%.2f", secondsElapsed))")
+                                    .font(.title)
+                                    .foregroundColor(colorScheme == .dark ? .black : .white)
+                                    .offset(x:3)
+                            }
+                        
+                            TimerArc(startAngle: Angle(degrees: 0.0),
+                                     endAngle: Angle(degrees: degreesToMove))
+                                .stroke(lineWidth: 5)
+                                .rotation(Angle(degrees: -90))
+                                .fill(colorScheme == .dark ? Color.black : Color.white)
+                            
+                                .onReceive(timer, perform: { _ in
+                                    if isTimerRunning {
+                                        print("\(secondsElapsed)")
+                                        secondsElapsed += 0.00125
+                                        degreesToMove += 0.0075
+                                        
+                                        if secondsElapsed >= 60.00 {
+                                            stopAndResetTimer()
+                                        }
+                                    }
+                                })
+                            }
                         }
                     }
-                }
-                .padding(10)
+                    .padding(10)
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 50)
@@ -179,17 +186,17 @@ struct ReadingView: View {
                             HStack {
                                 Text("Transcript")
                                     .font(.title)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(colorScheme == .dark ? .black : .white)
 
                                 Image(systemName: isSpeechRecording ? "mic.fill" : "mic.slash.fill")
                                     .font(.title)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(colorScheme == .dark ? .black : .white)
                             }
 
                             Text(transcript)
                                 .frame(width: 290, height: 230, alignment: .topLeading)
                                 .padding()
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .dark ? .black : .white)
                         }
                     }
                     .padding()
@@ -218,5 +225,6 @@ struct ReadingView: View {
 struct ReadingView_Previews: PreviewProvider {
     static var previews: some View {
         ReadingView()
+            .preferredColorScheme(.dark)
     }
 }

@@ -23,7 +23,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>You can view a text transcript.</string>
+	<string>You will be able to see your spoken text transcribed.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

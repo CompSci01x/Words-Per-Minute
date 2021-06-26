@@ -2,7 +2,7 @@
 //  WordsPerMinuteApp.swift
 //  WordsPerMinute
 //
-//  Created by Spruce Tree on 6/11/21.
+//  Created by CompSci01x on 6/11/21.
 //
 
 import SwiftUI
