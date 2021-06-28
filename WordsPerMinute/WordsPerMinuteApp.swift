@@ -11,7 +11,9 @@ import SwiftUI
 struct WordsPerMinuteApp: App {
     var body: some Scene {
         WindowGroup {
-            ReadingView()
+            NavigationView {
+                ReadingView()
+            }
         }
     }
 }

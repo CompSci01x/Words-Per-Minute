@@ -33,14 +33,16 @@ struct TimerArc: Shape {
 struct ReadingView: View {
     
     @Environment(\.colorScheme) var colorScheme
+    @State private var isEditViewPresented = false
     
+    @State private var timerLengthInSec = 60.0
     @State private var timerRingColor = Color.blue
     @State private var timerRingCardColor = Color.green
 
     @State private var secondsElapsed = 0.00
     @State private var degreesToMove = 0.00
     @State private var isTimerRunning = false
-    @State private var timer = Timer.publish(every: 0.00125, on: .main, in: .common).autoconnect()
+    @State private var timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
 
 
     private let speechRecognizer = SpeechRecognizer()
@@ -69,7 +71,7 @@ struct ReadingView: View {
         secondsElapsed = 0.00
         degreesToMove = 0.00
         
-        timer = Timer.publish(every: 0.00125, on: .main, in: .common).autoconnect()
+        timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
         startTranscript()
     }
     
@@ -162,10 +164,11 @@ struct ReadingView: View {
                                 .onReceive(timer, perform: { _ in
                                     if isTimerRunning {
                                         print("\(secondsElapsed)")
-                                        secondsElapsed += 0.00125
-                                        degreesToMove += 0.0075
+                                        secondsElapsed += 0.01
+                                        degreesToMove += 360 / timerLengthInSec / 100
                                         
-                                        if secondsElapsed >= 60.00 {
+                                        if secondsElapsed >= timerLengthInSec {
+                                            secondsElapsed = timerLengthInSec
                                             stopAndResetTimer()
                                         }
                                     }
@@ -216,7 +219,31 @@ struct ReadingView: View {
                 numOfWords += 1
                 uniqueWordCount["\(word.lowercased())", default: 0] += 1
             }
-            return Alert(title: Text("Words Per Minute"), message: Text("\(numOfWords) Words in \(String(format: "%.2f", secondsElapsed)) sec!\n\(uniqueWordCount.count) Unique Words!"), dismissButton: .default(Text("Got it!")))
+            return Alert(title: Text("Words Per Minute"),
+                         message: Text("\(numOfWords) Words in \(String(format: "%.2f", secondsElapsed)) sec!\n\(uniqueWordCount.count) Unique Words!"),
+                         dismissButton: .default(Text("Got it!")))
+        })
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarItems(trailing: Button("Edit") {
+            isEditViewPresented = true
+        })
+        .fullScreenCover(isPresented: $isEditViewPresented, content: {
+            NavigationView {
+                EditView(timerLengthInSec: $timerLengthInSec,
+                         timerRingColor: $timerRingColor,
+                         timerRingCardColor: $timerRingCardColor,
+                         transcriptCardColor: $transcriptCardColor)
+                    .navigationBarTitle("", displayMode: .inline)
+                    .navigationBarItems(leading: Button("Reset") {
+                        isEditViewPresented = false
+                        timerLengthInSec = 60.0
+                        timerRingColor = Color.blue
+                        timerRingCardColor = Color.green
+                        transcriptCardColor = Color.blue
+                    },trailing: Button("Done") {
+                        isEditViewPresented = false
+                    })
+            }
         })
     }
         
@@ -224,7 +251,9 @@ struct ReadingView: View {
 
 struct ReadingView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingView()
-            .preferredColorScheme(.dark)
+        NavigationView {
+            ReadingView()
+                .preferredColorScheme(.dark)
+        }
     }
 }

@@ -12,6 +12,7 @@
 		5D7C5A3E267442510070490D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C5A3D267442510070490D /* Preview Assets.xcassets */; };
 		5D7C5A46267450C90070490D /* ReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C5A45267450C90070490D /* ReadingView.swift */; };
 		5D7C5A4A267573900070490D /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C5A492675738F0070490D /* SpeechRecognizer.swift */; };
+		5DD4FF3A2688EAF400F3F3D4 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD4FF392688EAF400F3F3D4 /* EditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		5D7C5A3F267442510070490D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7C5A45267450C90070490D /* ReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingView.swift; sourceTree = "<group>"; };
 		5D7C5A492675738F0070490D /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		5DD4FF392688EAF400F3F3D4 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				5D7C5A36267442500070490D /* WordsPerMinuteApp.swift */,
 				5D7C5A45267450C90070490D /* ReadingView.swift */,
+				5DD4FF392688EAF400F3F3D4 /* EditView.swift */,
 				5D7C5A4B26768A980070490D /* Model */,
 				5D7C5A3A267442510070490D /* Assets.xcassets */,
 				5D7C5A3F267442510070490D /* Info.plist */,
@@ -151,6 +154,7 @@
 			files = (
 				5D7C5A4A267573900070490D /* SpeechRecognizer.swift in Sources */,
 				5D7C5A46267450C90070490D /* ReadingView.swift in Sources */,
+				5DD4FF3A2688EAF400F3F3D4 /* EditView.swift in Sources */,
 				5D7C5A37267442500070490D /* WordsPerMinuteApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
