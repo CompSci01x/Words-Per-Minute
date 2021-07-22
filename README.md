@@ -1,6 +1,9 @@
-# Words Per Minute App [](https://github.com/public-apis/public-apis/pulls)
+# "Words Per Minute" iOS App [](https://github.com/public-apis/public-apis/pulls)
 
- *Say or read as many words as fast as you can and see how fast you are!*
+*A SwiftUI iOS app utilizing AVFoundation and Speech frameworks to record, transcribe and calculate
+the number of words spoken within 60 sec.*
+
+Say or read as many words as fast as you can and see how fast you are!
 
 **Feature Demos:**
 - [App](#app-demo)
